@@ -1,4 +1,4 @@
-#include "duplicates.h"
+#include <vector>
 #include <cstdlib>
 #include <iostream>
 #include <chrono>
@@ -20,6 +20,7 @@ bool has_duplicates_fast(const vector<int> &data) {
 
     return false;
 }
+
 
 
 vector<int> get_duplicates_fast(const vector<int> &data) {
