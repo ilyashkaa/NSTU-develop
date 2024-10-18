@@ -51,6 +51,10 @@ Pair closest_pair_between(const vector<Point>& PLeft, const vector<Point>& PRigh
     // Отсортировать точки в PStripe по y-координате
     sort(PStripe.begin(), PStripe.end(), [](const Point& p1, const Point& p2) { return p1.y < p2.y; });
 
+    if (PStripe.size() < 2) {
+    return Pair(PLeft.front(), PLeft.back()); 
+    }
+
     // Найти пару ближайших точек в PStripe
     Pair closestPair(PStripe[0], PStripe[1]);
     for (int i = 0; i < PStripe.size() - 1; i++) {
@@ -67,6 +71,13 @@ Pair closest_pair_between(const vector<Point>& PLeft, const vector<Point>& PRigh
 // Нахождение пары ближайших точек во всем наборе точек
 Pair closest_pair(vector<Point> points) {
     // Если число точек меньше или равно 3, решить задачу тривиальным способом
+    if (points.size() <= 1) {
+        return Pair(points[0], points[0]); 
+    }
+    if (points.size() == 2) {
+        return Pair(points[0], points[1]);
+    }
+
     if (points.size() <= 3) {
         Pair closestPair(points[0], points[1]);
         for (int i = 0; i < points.size() - 1; i++) {
@@ -85,6 +96,9 @@ Pair closest_pair(vector<Point> points) {
 
     // Разбить точки на две половины
     int mid = points.size() / 2;
+    while(mid == points.size()) {
+        mid--; 
+    }
     vector<Point> PLeft(points.begin(), points.begin() + mid);
     vector<Point> PRight(points.begin() + mid, points.end());
 
@@ -121,7 +135,7 @@ int main() {
     uniform_real_distribution<> dist(-100.0, 100.0);
 
     // Ввод числа точек
-    int n = 10;
+    int n = 100000;
 
     // Создание массива точек
     vector<Point> points(n);
