@@ -57,7 +57,7 @@ void quickSort(vector<int>& arr, int start, int end) {
 
 
 int main() {
-    const int size = 1000000000;
+    const int size = 1000000;
     vector<int> arr, arr_slow;
     
     // Insert elements into container.
