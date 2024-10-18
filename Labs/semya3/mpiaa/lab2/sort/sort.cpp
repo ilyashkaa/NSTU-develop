@@ -2,8 +2,11 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <chrono>
+#include <algorithm>
 
 using namespace std;
+using namespace std::chrono;
 
 vector<int> shuffled_sequence(int size, int start = 0) {
     vector<int> result(size);
@@ -54,22 +57,26 @@ void quickSort(vector<int>& arr, int start, int end) {
 
 
 int main() {
-    const int size = 10000000;
-    vector<int> arr;
+    const int size = 1000000000;
+    vector<int> arr, arr_slow;
     
     // Insert elements into container.
     const auto elems_to_add = shuffled_sequence(size);
     for (const auto &elem: elems_to_add) {
         arr.push_back(elem);
     }
-
-    quickSort(arr, 0, arr.size() - 1);
-
-    cout << "Отсортированный массив: ";
-    for (int x : arr) {
-        cout << x << " ";
-    }
+    arr_slow = arr;
     cout << endl;
+    auto t1 = steady_clock::now();
+    quickSort(arr, 0, arr.size() - 1);
+    auto t2 = steady_clock::now();
+    cout << "Время быстрой сортировки: " << duration<double>(t2 - t1).count() << " сек." << endl;
+
+    t1 = steady_clock::now();
+    sort(arr_slow.begin(), arr_slow.end());
+    t2 = steady_clock::now();
+    cout << "Время обычной сортировки: " << duration<double>(t2 - t1).count() << " сек." << endl;
+
 
 
     return 0;
