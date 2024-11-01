@@ -77,11 +77,12 @@ def float_to_hex(number, byte_length):
         mantiss = normal(number[0][1:] + number[1], 23)
     elif byte_length == 8:
         exp = normal(ten_to_r(power + 1023, 2), 11)
-        print(number[0][1:] + number[1])
         mantiss = normal(number[0][1:] + number[1], 52)
     n = fl + exp + mantiss
     return ten_to_r(r_to_ten(n, 2), 16)
 
-n = -123.5
-a = float_to_hex(n, 8)
-print(a)
+n = -172.563
+a = float_to_hex(n, 4)
+b = float_to_hex(n, 8)
+print(f"{n} в четырехбайтном представлении: {a}")
+print(f"{n} в восьмибайтном представлении: {b}")

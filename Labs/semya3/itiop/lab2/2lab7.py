@@ -59,7 +59,6 @@ def convert_sym_to_n(sym):
 
 def hex_to_float(number):
     number = ten_to_r(r_to_ten(number, 16), 2)
-    print(number)
     if len(number) == 63 or len(number) == 31:
         number = "0" + number
     fl = number[0]
@@ -77,7 +76,6 @@ def hex_to_float(number):
 
     if len(number) == 32:
         exp = number[1:9]
-        print(exp)
         power = r_to_ten(exp, 2) - 127
         mantiss = "1" + number[9:]
         mantiss = mantiss[:mantiss.rfind("1") + 1]
@@ -88,7 +86,7 @@ def hex_to_float(number):
             mantiss = r_to_ten(mantiss, 2)
         return mantiss
 
-
-print(hex_to_float("41ED8000"))
+n = "C27C4000"
+print(f"{n} как число с плавающей запятой: {hex_to_float(n)}")
 
     
