@@ -86,7 +86,7 @@ def hex_to_float(number):
             mantiss = r_to_ten(mantiss, 2)
         return mantiss
 
-n = "C27C4000"
+n = "405FA70000000000"
 print(f"{n} как число с плавающей запятой: {hex_to_float(n)}")
 
     
