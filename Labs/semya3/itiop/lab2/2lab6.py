@@ -1,3 +1,20 @@
+import struct
+
+def convert(float_num, precision):
+    number = float(float_num)
+    try:
+        if precision == 4:
+            packed_data = struct.pack('!f', number)  # '!f' для big-endian float
+        elif precision == 8:
+            packed_data = struct.pack('!d', number)  # '!d' для big-endian double
+        else:
+            return None  # Неподдерживаемая точность
+
+        hex_string = packed_data.hex()
+        return hex_string
+    except struct.error:
+        return None #Возможная ошибка при преобразовании
+
 def ten_to_r(decimal_num, r):
     """Преобразует вещественное десятичное число в r-ичную систему счисления."""
     int_part = int(decimal_num)
@@ -65,23 +82,37 @@ def normal(ln, cur):
     return ln
 
 def float_to_hex(number, byte_length):
+    a = convert(number, byte_length)
+    chck = int(number)
     if number < 0:
         number = ten_to_r(abs(number), 2)
         fl = "1"
     else:
         number = ten_to_r(number, 2)
         fl = "0"
-    power = len(number[0]) - 1
-    if byte_length == 4:
-        exp = normal(ten_to_r(power + 127, 2), 8)
-        mantiss = normal(number[0][1:] + number[1], 23)
-    elif byte_length == 8:
-        exp = normal(ten_to_r(power + 1023, 2), 11)
-        mantiss = normal(number[0][1:] + number[1], 52)
+    
+    if chck:
+        power = len(number[0]) - 1
+        if byte_length == 4:
+            print(ten_to_r(power + 127, 2))
+            exp = normal(ten_to_r(power + 127, 2), 8)
+            mantiss = normal(number[0][1:] + number[1], 23)
+        elif byte_length == 8:
+            exp = normal(ten_to_r(power + 1023, 2), 11)
+            mantiss = normal(number[0][1:] + number[1], 52) 
+    else:
+        power = -number[1].find("1") - 1
+        if byte_length == 4:
+            exp = normal(ten_to_r(power + 127, 2), 8)
+            mantiss = normal(number[0][1:] + number[1], 23)
+        elif byte_length == 8:
+            exp = normal(ten_to_r(power + 1023, 2), 11)
+            mantiss = normal(number[0][1:] + number[1], 52)
     n = fl + exp + mantiss
-    return ten_to_r(r_to_ten(n, 2), 16)
+    n = ten_to_r(r_to_ten(n, 2), 16)
+    return a
 
-n = -172.563
+n = 0.5
 a = float_to_hex(n, 4)
 b = float_to_hex(n, 8)
 print(f"{n} в четырехбайтном представлении: {a}")
