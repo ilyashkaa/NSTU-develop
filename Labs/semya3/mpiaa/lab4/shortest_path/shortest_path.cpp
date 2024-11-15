@@ -160,7 +160,7 @@ int main() {
                 chrono::duration<double> duration = end - start;
                 total_time += (duration).count();
             }
-            cout << "Ребра: " << num_vertices << ", Узлы: " << num_edges << ", Среднее время: " << (double)total_time / num_tests << " c." << endl;
+            cout << "Ребра: " << num_vertices << ", Вершины: " << num_edges << ", Среднее время: " << (double)total_time / num_tests << " c." << endl;
         }
     }
 
