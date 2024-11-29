@@ -10,7 +10,7 @@ Sub CreateSurfacePlot()
   Dim inputString As String
   Dim inputLines() As String
 
-  ' Ввод параметров пользователем
+  ' пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
     x1 = InputBox("Input x1 value:")
     x2 = InputBox("Input x2 value:")
     y1 = InputBox("Input y1 value:")
@@ -20,10 +20,10 @@ Sub CreateSurfacePlot()
     chartTitle = InputBox("Input Title value:")
 
 
-  ' Проверка на корректность ввода
+  ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   
   If nx < 2 Or ny < 2 Then
-    MsgBox "Количество шагов по x и y должно быть не меньше 2.", vbCritical
+    MsgBox "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ x пїЅ y пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 2.", vbCritical
     Exit Sub
   End If
   If x1 >= x2 Or y1 >= y2 Then
@@ -31,12 +31,12 @@ Sub CreateSurfacePlot()
     Exit Sub
   End If
 
-  ' Создание массивов значений
+  ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   ReDim xValues(1 To nx)
   ReDim yValues(1 To ny)
   ReDim zValues(1 To nx, 1 To ny)
 
-  ' Заполнение массивов
+  ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   For i = 1 To nx
     xValues(i) = x1 + (x2 - x1) * (i - 1) / (nx - 1)
   Next i
@@ -51,19 +51,19 @@ Sub CreateSurfacePlot()
   Next i
 
 
-  ' Создание таблицы
+  ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   Worksheets.Add
   Range("A1").Resize(nx, ny).Value = zValues
   Range("A1").CurrentRegion.Name = "Data"
 
-  ' Создание диаграммы поверхности
+  ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   Set cht = Charts.Add
   With cht
     .ChartType = xlSurface
     .SetSourceData Source:=Range("Data")
     .HasLegend = False
 
-    ' Добавление заголовка диаграммы
+    ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     With .chartTitle
         .Text = chartTitle
     End With
