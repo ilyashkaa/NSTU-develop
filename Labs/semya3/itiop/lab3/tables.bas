@@ -1,4 +1,4 @@
-Attribute VB_Name = "NewMacros"
+Attribute VB_Name = "NewMacros1"
 Sub таблица()
  Dim tableName As String
     Dim numRows As Integer
@@ -17,7 +17,7 @@ Sub таблица()
     numCols = InputBox("Введите количество столбцов:", "Количество столбцов")
 
     ' Определить номер таблицы
-    tableNumber = doc.tables.Count + 1
+    tableNumber = doc.Tables.Count + 1
 
     ' Вставить заголовок таблицы
     Set rng = Selection.Range
@@ -25,7 +25,7 @@ Sub таблица()
     rng.Collapse Direction:=wdCollapseEnd
 
     ' Вставить таблицу
-    Set tbl = doc.tables.Add(Range:=rng, numRows:=numRows, NumColumns:=numCols)
+    Set tbl = doc.Tables.Add(Range:=rng, numRows:=numRows, NumColumns:=numCols)
 
     ' Установить цвет границ
     tbl.Borders.InsideLineStyle = wdLineStyleSingle
@@ -37,7 +37,7 @@ Sub таблица()
     ' Нумерация первого столбца
     Dim i As Integer
     For i = 1 To numRows
-        tbl.cell(i, 1).Range.Text = i
+        tbl.Cell(i, 1).Range.Text = i
     Next i
 
     ' Переместить курсор за таблицу
@@ -45,3 +45,24 @@ Sub таблица()
     tbl.Range.Select
 
 End Sub
+
+Sub UpdateTableNumbering(tbl As table)
+    Dim i As Integer
+    Dim cellRange As Range
+
+    ' Пронумеровать строки в первом столбце
+    For i = 1 To tbl.Rows.Count
+        Set cellRange = tbl.Cell(i, 1).Range
+        cellRange.Text = i
+    Next i
+End Sub
+
+Sub UpdateAllTablesNumbering()
+    Dim tbl As table
+
+    ' Обновить нумерацию во всех таблицах документа
+    For Each tbl In ActiveDocument.Tables
+        Call UpdateTableNumbering(tbl)
+    Next tbl
+End Sub
+

@@ -112,7 +112,7 @@ def float_to_hex(number, byte_length):
     n = ten_to_r(r_to_ten(n, 2), 16)
     return a
 
-n = 0.5
+n = 0.05
 a = float_to_hex(n, 4)
 b = float_to_hex(n, 8)
 print(f"{n} в четырехбайтном представлении: {a}")

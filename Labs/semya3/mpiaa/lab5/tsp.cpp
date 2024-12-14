@@ -7,11 +7,21 @@
 
 using namespace std;
 using namespace std::chrono;
+const double INF = numeric_limits<double>::infinity();
 
 // Структура для представления ребра
 struct Edge {
     int to;
     int weight;
+};
+
+struct Node {
+    int city;
+    double cost;
+    vector<int> path;
+    vector<bool> visited;
+
+    Node(int c, double co, const vector<int>& p, const vector<bool>& v) : city(c), cost(co), path(p), visited(v) {}
 };
 
 // Функция для вычисления длины пути
@@ -156,6 +166,47 @@ vector<int> tsp_bnb(const vector<vector<Edge>>& graph, int start) {
     return BnB(graph, visited, bestPath);
 }
 
+double B_n_B(const vector<vector<Edge>>& graph, int start_city) {
+    int n = graph.size();
+    if (n == 0) return 0;
+
+    vector<bool> visited(n, false);
+    vector<int> path = {start_city};
+    visited[start_city] = true;
+
+    vector<Node> q;
+    q.emplace_back(start_city, 0, path, visited);
+
+    double min_cost = INF;
+
+    while (!q.empty()) {
+        Node current = q.front();
+        q.erase(q.begin());
+
+        if (current.path.size() == n) { // Все города посещены
+            for (const auto& edge : graph[current.city]) {
+                if (edge.to == start_city) {
+                    current.cost += edge.weight;
+                    break;
+                }
+            }
+            min_cost = min(min_cost, current.cost);
+            continue;
+        }
+
+        for (const auto& edge : graph[current.city]) {
+            if (!current.visited[edge.to]) {
+                vector<int> next_path = current.path;
+                next_path.push_back(edge.to);
+                vector<bool> next_visited = current.visited;
+                next_visited[edge.to] = true;
+                q.emplace_back(edge.to, current.cost + edge.weight, next_path, next_visited);
+            }
+        }
+    }
+
+    return min_cost;
+}
 
 // Жадный алгоритм
 vector<int> tsp_greedy(const vector<vector<Edge>>& graph, int start) {
@@ -183,7 +234,8 @@ vector<int> tsp_greedy(const vector<vector<Edge>>& graph, int start) {
 
 
 int main() {
-    int numVertices = 8;
+    for (int i=1; i < 11; i++){
+    int numVertices = i;
     int maxWeight = 100;
 
     vector<vector<Edge>> graph = generateRandomCompleteGraph(numVertices, maxWeight);
@@ -199,12 +251,12 @@ int main() {
     cout << "Длина пути: " << pathLength(graph, bruteforcePath) << " Время: " << duration.count() << "сек." << endl;
 
     start = steady_clock::now();
-    vector<int> bnbPath = tsp_bnb(graph, startNode);
+    double bnbPath = B_n_B(graph, startNode);
     end = steady_clock::now();
     duration = end - start;
     cout << "Ветви и границы: ";
-    for (int node : bnbPath) cout << node << " ";
-    cout << "Длина пути: " << pathLength(graph, bnbPath) << " Время: " << duration.count() << "сек." << endl;
+    cout << "123" << " ";
+    cout << "Длина пути: " << bnbPath << " Время: " << duration.count() << "сек." << endl;
 
     start = steady_clock::now();
     vector<int> greedyPath = tsp_greedy(graph, startNode);
@@ -213,6 +265,7 @@ int main() {
     cout << "Жадный: ";
     for (int node : greedyPath) cout << node << " ";
     cout << "Длина пути: " << pathLength(graph, greedyPath) << " Время: " << duration.count() << "сек." << endl;
+    cout << endl << endl;}
 
     return 0;
 }

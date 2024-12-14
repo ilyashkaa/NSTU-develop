@@ -146,11 +146,11 @@ int main() {
 
 
     // Замер времени на случайных графах
-    for (int num_vertices : {10, 100, 1000, 10000, 100000, 1000000}) {
+    for (int num_vertices : {10000, 1000000}) {
         for (int num_edges : {num_vertices, 2 * num_vertices, 3 * num_vertices}) {
             auto graph = generate_random_graph(num_vertices, num_edges);
             double total_time = 0;
-            int num_tests = 100; // Количество тестов для усреднения
+            int num_tests = 5; // Количество тестов для усреднения
             for (int i = 0; i < num_tests; ++i) {
                 int start_node = rand() % num_vertices;
                 int end_node = rand() % num_vertices;

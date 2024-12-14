@@ -96,9 +96,6 @@ vector<pair<int, int>> prim(const vector<Edge>& edges, int numVertices, int star
 
 
 int main() {
-    srand(time(0));
-
-
     for (int numVertices : {10, 100, 1000, 10000, 100000, 1000000}) {
         for (int numEdges : {numVertices, 2 * numVertices, 3 * numVertices}) {
             vector<Edge> graph =  generateRandomConnectedGraph(numVertices, numEdges);
